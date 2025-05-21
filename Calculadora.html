@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora</title>
+    <style>
+      body {
+        font: normal 10pt Arial;
+        background-color: rgb(131, 248, 209);
+        text-align: center;
+      }
+
+      input[type="number"] {
+        font: normal 10pt Arial;
+        width: 80px;
+        height: 30px;
+        text-align: center;
+        margin: 5px;
+      }
+
+      input[type="button"] {
+        font: bold 10pt Arial;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 5px;
+      }
+
+      input[type="button"]:hover {
+        background-color: #0056b3;
+      }
+
+      div {
+        font: normal 14pt Arial;
+        color: rgb(16, 1, 92);
+        margin-top: 10px;
+      }
+
+      fieldset {
+        border: 2px solid #000;
+        margin: 20px auto;
+        width: 300px;
+        border-radius: 10px;
+        padding: 15px;
+        background-color: #e9fff6;
+      }
+
+      legend {
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 0 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Calculadora de Operações</h1>
+
+    <fieldset>
+      <legend>Soma</legend>
+      <input type="number" id="txtn1" /> +
+      <input type="number" id="txtn2" />
+      <input
+        type="button"
+        value="Somar"
+        onclick="calcular('+', 'txtn1', 'txtn2', 'res')"
+      />
+      <div id="res">Resultado</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Subtração</legend>
+      <input type="number" id="txtn3" /> -
+      <input type="number" id="txtn4" />
+      <input
+        type="button"
+        value="Subtrair"
+        onclick="calcular('-', 'txtn3', 'txtn4', 'res2')"
+      />
+      <div id="res2">Resultado</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Multiplicação</legend>
+      <input type="number" id="txtn5" /> ×
+      <input type="number" id="txtn6" />
+      <input
+        type="button"
+        value="Multiplicar"
+        onclick="calcular('*', 'txtn5', 'txtn6', 'res3')"
+      />
+      <div id="res3">Resultado</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Divisão</legend>
+      <input type="number" id="txtn7" /> ÷
+      <input type="number" id="txtn8" />
+      <input
+        type="button"
+        value="Dividir"
+        onclick="calcular('/', 'txtn7', 'txtn8', 'res4')"
+      />
+      <div id="res4">Resultado</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Funções Trigonométricas</legend>
+      <input type="number" id="angulo" placeholder="Ângulo em graus" />
+      <input
+        type="button"
+        value="Calcular Seno/Cosseno/Tangente"
+        onclick="calcularTrigonometria()"
+      />
+      <div id="resTrig">Resultado</div>
+    </fieldset>
+
+    <script>
+      function calcular(op, id1, id2, resId) {
+        const n1 = Number(document.getElementById(id1).value);
+        const n2 = Number(document.getElementById(id2).value);
+        const res = document.getElementById(resId);
+
+        if (isNaN(n1) || isNaN(n2)) {
+          res.innerHTML = "⚠️ Preencha os dois campos corretamente.";
+          return;
+        }
+
+        if (op === "/" && n2 === 0) {
+          res.innerHTML = "⚠️ Não é possível dividir por zero.";
+          return;
+        }
+
+        let resultado;
+        switch (op) {
+          case "+":
+            resultado = n1 + n2;
+            break;
+          case "-":
+            resultado = n1 - n2;
+            break;
+          case "*":
+            resultado = n1 * n2;
+            break;
+          case "/":
+            resultado = n1 / n2;
+            break;
+        }
+
+        res.innerHTML = `O resultado de <strong>${n1} ${op} ${n2}</strong> é <strong>${resultado}</strong>.`;
+      }
+
+      function toRadians(degrees) {
+        return (degrees * Math.PI) / 180;
+      }
+
+      function sinDeg(degrees) {
+        return Math.sin(toRadians(degrees));
+      }
+
+      function cosDeg(degrees) {
+        return Math.cos(toRadians(degrees));
+      }
+
+      function tanDeg(degrees) {
+        return Math.tan(toRadians(degrees));
+      }
+
+      function calcularTrigonometria() {
+        const ang = Number(document.getElementById("angulo").value);
+        const res = document.getElementById("resTrig");
+
+        if (isNaN(ang)) {
+          res.innerHTML = "⚠️ Digite um valor de ângulo válido.";
+          return;
+        }
+
+        const seno = sinDeg(ang).toFixed(4);
+        const cosseno = cosDeg(ang).toFixed(4);
+        const tangente =
+          Math.abs(cosDeg(ang)) < 1e-10 ? "indefinida" : tanDeg(ang).toFixed(4);
+
+        res.innerHTML = `
+          <strong>Ângulo:</strong> ${ang}°<br>
+          <strong>Seno:</strong> ${seno}<br>
+          <strong>Cosseno:</strong> ${cosseno}<br>
+          <strong>Tangente:</strong> ${tangente}
+        `;
+      }
+    </script>
+  </body>
+</html>

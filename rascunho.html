@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rascunho</title>
+  </head>
+  <body></body>
+  <script>
+    function toRadians(degrees) {
+      return (degrees * Math.PI) / 180;
+    }
+
+    function sinDeg(degrees) {
+      return Math.sin(toRadians(degrees));
+    }
+
+    function cosDeg(degrees) {
+      return Math.cos(toRadians(degrees));
+    }
+
+    function tanDeg(degrees) {
+      return Math.tan(toRadians(degrees));
+    }
+
+    console.log(sinDeg(30)); // ~0.5
+    console.log(cosDeg(60)); // ~0.5
+    console.log(tanDeg(45)); // ~1
+  </script>
+</html>
